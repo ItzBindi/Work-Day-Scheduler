@@ -7,7 +7,8 @@ var currentTimeEl = $("#currentDay");
 var saveButton = $(".btn")
 var descriptionEl = $(".description")
 var timeClass = $(".time-block")
-var currentHour = dayjs().hour();
+var currentHour = dayjs();
+console.log(currentHour);
 
 
 
@@ -40,20 +41,17 @@ saveButton.each(function(){
  }
 
 timeClass.each(function(){
-  var time = $(this)
-  var timeId = parseInt(time.attr("id"))
-
-  time.removeClass("past present future")
   
-  if (timeId === currentHour){
-    time.addClass("present")
-  }else if (timeId < currentHour){
-    time.addClass("past")
+  
+  if (timeClass === currentHour){
+    timeClass.addClass("present")
+  }else if (timeClass < currentHour){
+    timeClass.addClass("past")
   }else {
-    time.addClass("future")
+    timeClass.addClass("future")
   }
 })
-
+console.log(timeClass);
 
   // })
   // TODO: Add code to apply the past, present, or future class to each time
