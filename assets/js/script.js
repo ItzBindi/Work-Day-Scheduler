@@ -6,8 +6,8 @@ console.log(dayjs().format("dddd, MMM D, YYYY"));
 var currentTimeEl = $("#currentDay");
 var saveButton = $(".btn")
 var descriptionEl = $(".description")
-var timeClass = $(".time-block")
-var currentHour = dayjs();
+// var timeClass = $(".time-block")
+var currentHour = dayjs().hour();
 console.log(currentHour);
 
 
@@ -17,41 +17,60 @@ currentTimeEl.text(dayjs().format("dddd, MMM D, YYYY"))
 
 
 
-$(function () {
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
-  //
+  //Get parent id 
 
 saveButton.each(function(){
   $(this).on("click", function(e){
     e.preventDefault();
     var descriptionText = $(this).siblings(".description").val();
-    console.log("working", descriptionText);
-    saveInLocalStorage(descriptionText);
+    var timeBlock = $(this).parent().attr("id");
+    
+    
+    localStorage.setItem(timeBlock, descriptionText)
   })
 })
 
- function saveInLocalStorage(descriptionText){
-  localStorage.setItem("Work To Do", descriptionText)
-  console.log(descriptionText);
- }
+ 
+  
+  
+ 
+ $("#hour-9 .description").val(localStorage.getItem("hour-9"))
+ $("#hour-10 .description").val(localStorage.getItem("hour-10"))
+ $("#hour-11 .description").val(localStorage.getItem("hour-11"))
+ $("#hour-12 .description").val(localStorage.getItem("hour-12"))
+ $("#hour-13 .description").val(localStorage.getItem("hour-13"))
+ $("#hour-14 .description").val(localStorage.getItem("hour-14"))
+ $("#hour-15 .description").val(localStorage.getItem("hour-15"))
+ $("#hour-16 .description").val(localStorage.getItem("hour-16"))
+ $("#hour-17 .description").val(localStorage.getItem("hour-17"))
 
-timeClass.each(function(){
+
+
+
+  function hourUpdater() {
+
   
-  
-  if (timeClass === currentHour){
-    timeClass.addClass("present")
-  }else if (timeClass < currentHour){
-    timeClass.addClass("past")
-  }else {
-    timeClass.addClass("future")
+  $(".time-block").each(function(){
+    var hour = parseInt($(this).attr("id").split("hour-")[1])
+    if (hour === currentHour){
+      $(this).addClass("present")
+    }else if (hour < currentHour){
+      $(this).addClass("past")
+    }else {
+      $(this).addClass("future")
+    }
   }
-})
-console.log(timeClass);
+  )}
+ 
+
+
 
   // })
   // TODO: Add code to apply the past, present, or future class to each time
@@ -66,5 +85,5 @@ console.log(timeClass);
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
-});
+hourUpdater();
 
